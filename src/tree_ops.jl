@@ -92,8 +92,11 @@ end
 # Uses a heap for fast insertion.
 @inline function add_points_knn!{T}(best_dists::Vector{T}, best_idxs::Vector{Int},
                                    tree::NNTree{T}, index::Int, point::Vector{T},
-                                   do_end::Bool)
+                                   do_end::Bool, timeout::Float64)
     for z in get_leaf_range(tree.tree_data, index)
+        if time()>timeout
+            error("KDTree: Timeout")
+        end
         @POINT 1
         idx = tree.reordered ? z : tree.indices[z]
         dist_d = evaluate(tree.metric, tree.data, point, idx, do_end)
