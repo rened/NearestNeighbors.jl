@@ -6,7 +6,7 @@ in the `tree`. If `sortres = true` the result is sorted such that the results ar
 in the order of increasing distance to the point.
 """
 function knn{T <: AbstractFloat}(tree::NNTree{T}, points::AbstractArray{T}, k::Int, timeout::Float64 = 10.0)
-    sortres = false
+    sortres = true
 
     timeout += time()
 
